@@ -60,10 +60,6 @@ npm test --workspace=packages/scratch-vm
 
 Each package defines its own `test` and `build` scripts; see "Packages at a glance" for specifics.
 
-**Commit messages are enforced.** Husky + commitlint validate every commit against the
-[Conventional Commits](https://www.conventionalcommits.org/) format. A commit that doesn't conform will be
-rejected by the pre-commit hook.
-
 ## Repository layout
 
 ```text
@@ -150,7 +146,6 @@ Review all changes and confirm:
 - **Documentation**: Update `AGENTS.md` and any other documentation files whose content is affected by the change
   (commands, repo structure, conventions, etc.). The "Packages at a glance" table is particularly prone to going
   stale when a package migrates its tooling.
-- **Commit format**: Commit message follows Conventional Commits — the husky hook will reject it otherwise.
 - **Build passes**: `npm run build` (or `npm run build` in the affected package) completes successfully.
 - **Tests pass**: `npm test` (or `npm test` in the affected package) completes with no failures.
 - **No lint errors**: `npm run test:lint` (or `npm run lint`) passes in the affected package.
