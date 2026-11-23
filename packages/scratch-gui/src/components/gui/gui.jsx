@@ -534,7 +534,7 @@ const GUIComponent = props => {
                             ) : null}
                         </Box>
 
-                        <Box
+                        {/* <Box
                             role="complementary"
                             aria-label={intl.formatMessage(ariaMessages.stageAndTarget)}
                             className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}
@@ -571,7 +571,7 @@ const GUIComponent = props => {
                                     onNewBackdropClick={onNewLibraryBackdropClick}
                                 />
                             </Box>
-                        </Box>
+                        </Box> */}
                     </Box>
                     <DragLayer />
                 </Box>

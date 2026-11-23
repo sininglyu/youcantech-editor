@@ -19,6 +19,7 @@ import Divider from '../divider/divider.jsx';
 import SaveStatus from './save-status.jsx';
 import SB3Downloader from '../../containers/sb3-downloader.jsx';
 import ProjectWatcher from '../../containers/project-watcher.jsx';
+import Controls from '../../containers/controls.jsx';
 import ProjectTitleInput from './project-title-input.jsx';
 import AuthorInfo from './author-info.jsx';
 import LoginDropdown from './login-dropdown.jsx';
@@ -380,6 +381,11 @@ class MenuBar extends React.Component {
                             depth={1}
                         />)}
                     </div>
+                    <Divider className={classNames(styles.divider)} />
+                    <div className={classNames(styles.menuBarItem)}>
+                        <Controls vm={this.props.vm} />
+                    </div>
+                    <Divider className={classNames(styles.divider)} />
                     {this.props.canEditTitle ? (
                         <div className={classNames(styles.menuBarItem, styles.growable)}>
                             <MenuBarItemTooltip
