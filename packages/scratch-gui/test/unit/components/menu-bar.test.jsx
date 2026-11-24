@@ -2,6 +2,7 @@ import React from 'react';
 import {renderWithIntl} from '../../helpers/intl-helpers.jsx';
 import MenuBar from '../../../src/components/menu-bar/menu-bar';
 import {menuInitialState} from '../../../src/reducers/menus';
+import {vmStatusInitialState} from '../../../src/reducers/vm-status';
 import {LoadingState} from '../../../src/reducers/project-state';
 import {DEFAULT_MODE} from '../../../src/lib/settings/color-mode';
 import {fireEvent} from '@testing-library/react';
@@ -35,6 +36,7 @@ describe('MenuBar Component', () => {
                 year: 'NOW'
             },
             vm: new VM(),
+            vmStatus: vmStatusInitialState,
             platform: {
                 platform: PLATFORM.WEB
             }

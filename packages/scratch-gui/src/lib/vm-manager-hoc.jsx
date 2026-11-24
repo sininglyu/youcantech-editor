@@ -54,6 +54,14 @@ const vmManagerHOC = function (WrappedComponent) {
         loadProject () {
             return this.props.vm.loadProject(this.props.projectData)
                 .then(() => {
+                    // This editor is built for LEGO WeDo 2.0, so its blocks are always available.
+                    // Loaded extensions persist across project loads, so this only loads it once.
+                    const extensionManager = this.props.vm.extensionManager;
+                    if (!extensionManager.isExtensionLoaded('wedo2')) {
+                        return extensionManager.loadExtensionURL('wedo2');
+                    }
+                })
+                .then(() => {
                     this.props.onLoadedProject(this.props.loadingState, this.props.canSave);
                     // Wrap in a setTimeout because skin loading in
                     // the renderer can be async.

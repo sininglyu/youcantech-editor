@@ -34,6 +34,7 @@ describe('VMManagerHOC', () => {
         vm.setCompatibilityMode = jest.fn();
         vm.setLocale = jest.fn();
         vm.start = jest.fn();
+        jest.spyOn(vm, 'renderer', 'get').mockReturnValue({draw: jest.fn()});
     });
     test('when it mounts in player mode, the vm is initialized but not started', () => {
         const Component = () => (<div />);
@@ -169,6 +170,74 @@ describe('VMManagerHOC', () => {
         setTimeout(() => (
             expect(mockedOnLoadedProject).toHaveBeenLastCalledWith(LoadingState.LOADING_VM_WITH_ID, true)
         ), 1);
+    });
+    test('after a project loads, it loads the WeDo 2.0 extension', async () => {
+        vm.loadProject = jest.fn(() => Promise.resolve());
+        jest.spyOn(vm.extensionManager, 'isExtensionLoaded').mockReturnValue(false);
+        jest.spyOn(vm.extensionManager, 'loadExtensionURL').mockResolvedValue();
+        const mockedOnLoadedProject = jest.fn();
+        const Component = () => <div />;
+        const WrappedComponent = vmManagerHOC(Component);
+        const {rerender} = render(
+            <WrappedComponent
+                fontsLoaded
+                isStarted
+                isLoadingWithId={false}
+                store={store}
+                vm={vm}
+                onLoadedProject={mockedOnLoadedProject}
+            />
+        );
+        rerender(
+            <WrappedComponent
+                fontsLoaded
+                isStarted
+                isLoadingWithId
+                store={store}
+                vm={vm}
+                onLoadedProject={mockedOnLoadedProject}
+                loadingState={LoadingState.LOADING_VM_WITH_ID}
+                projectData="100"
+            />
+        );
+        await new Promise(resolve => setTimeout(resolve, 0));
+        expect(vm.extensionManager.isExtensionLoaded).toHaveBeenCalledWith('wedo2');
+        expect(vm.extensionManager.loadExtensionURL).toHaveBeenCalledWith('wedo2');
+        expect(mockedOnLoadedProject).toHaveBeenCalled();
+    });
+    test('after a project loads, it does not reload an already loaded WeDo 2.0 extension', async () => {
+        vm.loadProject = jest.fn(() => Promise.resolve());
+        jest.spyOn(vm.extensionManager, 'isExtensionLoaded').mockReturnValue(true);
+        jest.spyOn(vm.extensionManager, 'loadExtensionURL').mockResolvedValue();
+        const mockedOnLoadedProject = jest.fn();
+        const Component = () => <div />;
+        const WrappedComponent = vmManagerHOC(Component);
+        const {rerender} = render(
+            <WrappedComponent
+                fontsLoaded
+                isStarted
+                isLoadingWithId={false}
+                store={store}
+                vm={vm}
+                onLoadedProject={mockedOnLoadedProject}
+            />
+        );
+        rerender(
+            <WrappedComponent
+                fontsLoaded
+                isStarted
+                isLoadingWithId
+                store={store}
+                vm={vm}
+                onLoadedProject={mockedOnLoadedProject}
+                loadingState={LoadingState.LOADING_VM_WITH_ID}
+                projectData="100"
+            />
+        );
+        await new Promise(resolve => setTimeout(resolve, 0));
+        expect(vm.loadProject).toHaveBeenCalled();
+        expect(vm.extensionManager.loadExtensionURL).not.toHaveBeenCalled();
+        expect(mockedOnLoadedProject).toHaveBeenCalled();
     });
     test('if the fontsLoaded prop becomes true, it loads project data into the vm', () => {
         vm.loadProject = jest.fn(() => Promise.resolve());
