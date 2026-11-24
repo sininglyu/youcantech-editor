@@ -11,9 +11,7 @@ import VM from '@scratch/scratch-vm';
 import Renderer from '@scratch/scratch-render';
 
 import Blocks from '../../containers/blocks.jsx';
-import CostumeTab from '../../containers/costume-tab.jsx';
 import TargetPane from '../../containers/target-pane.jsx';
-import SoundTab from '../../containers/sound-tab.jsx';
 import StageWrapper from '../../containers/stage-wrapper.jsx';
 import Loader from '../loader/loader.jsx';
 import Box from '../box/box.jsx';
@@ -23,7 +21,6 @@ import BackdropLibrary from '../../containers/backdrop-library.jsx';
 import Watermark from '../../containers/watermark.jsx';
 
 import Backpack from '../../containers/backpack.jsx';
-import ExtensionsButton from '../extension-button/extension-button.jsx';
 import WebGlModal from '../../containers/webgl-modal.jsx';
 import TipsLibrary from '../../containers/tips-library.jsx';
 import Cards from '../../containers/cards.jsx';
@@ -40,8 +37,6 @@ import {AccountMenuOptionsPropTypes} from '../../lib/account-menu-options';
 
 import styles from './gui.css';
 import codeIcon from './icon--code.svg';
-import costumesIcon from './icon--costumes.svg';
-import soundsIcon from './icon--sounds.svg';
 import DebugModal from '../debug-modal/debug-modal.jsx';
 import {setPlatform} from '../../reducers/platform.js';
 import {setTheme} from '../../reducers/settings.js';
@@ -426,46 +421,6 @@ const GUIComponent = props => {
                                                 id="gui.gui.codeTab"
                                             />
                                         </Tab>
-                                        <Tab
-                                            className={tabClassNames.tab}
-                                            onClick={onActivateCostumesTab}
-                                            role="tab"
-                                            tabIndex="0"
-                                        >
-                                            <img
-                                                draggable={false}
-                                                src={costumesIcon}
-                                            />
-                                            {targetIsStage ? (
-                                                <FormattedMessage
-                                                    defaultMessage="Backdrops"
-                                                    description="Button to get to the backdrops panel"
-                                                    id="gui.gui.backdropsTab"
-                                                />
-                                            ) : (
-                                                <FormattedMessage
-                                                    defaultMessage="Costumes"
-                                                    description="Button to get to the costumes panel"
-                                                    id="gui.gui.costumesTab"
-                                                />
-                                            )}
-                                        </Tab>
-                                        <Tab
-                                            className={tabClassNames.tab}
-                                            onClick={onActivateSoundsTab}
-                                            role="tab"
-                                            tabIndex="0"
-                                        >
-                                            <img
-                                                draggable={false}
-                                                src={soundsIcon}
-                                            />
-                                            <FormattedMessage
-                                                defaultMessage="Sounds"
-                                                description="Button to get to the sounds panel"
-                                                id="gui.gui.soundsTab"
-                                            />
-                                        </Tab>
                                     </TabList>
                                 </Box>
                                 <TabPanel
@@ -492,37 +447,9 @@ const GUIComponent = props => {
                                             colorMode={colorMode}
                                         />
                                     </Box>
-                                    <ExtensionsButton
-                                        intl={intl}
-                                        onExtensionButtonClick={onExtensionButtonClick}
-                                    />
                                     <Box className={styles.watermark}>
                                         <Watermark />
                                     </Box>
-                                </TabPanel>
-                                <TabPanel
-                                    className={tabClassNames.tabPanel}
-                                    role="tabpanel"
-                                >
-                                    {costumesTabVisible ? <CostumeTab
-                                        ariaLabel={targetIsStage ? intl.formatMessage(ariaMessages.backdropsPanel) :
-                                            intl.formatMessage(ariaMessages.costumesPanel)}
-                                        ariaRole="region"
-                                        vm={vm}
-                                        onNewLibraryBackdropClick={onNewLibraryBackdropClick}
-                                        onNewLibraryCostumeClick={onNewLibraryCostumeClick}
-                                    /> : null}
-                                </TabPanel>
-                                <TabPanel
-                                    className={tabClassNames.tabPanel}
-                                    role="tabpanel"
-                                >
-                                    {soundsTabVisible ?
-                                        <SoundTab
-                                            ariaLabel={intl.formatMessage(ariaMessages.soundsPanel)}
-                                            ariaRole="region"
-                                            vm={vm}
-                                        /> : null}
                                 </TabPanel>
                             </Tabs>
                             {backpackVisible && backpackConfigured ? (

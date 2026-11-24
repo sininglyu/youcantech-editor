@@ -68,10 +68,6 @@ export default function (vm) {
         if (vm.editingTarget && vm.editingTarget.sprite.sounds.length > 0) {
             menu = vm.editingTarget.sprite.sounds.map(sound => [sound.name, sound.name]);
         }
-        menu.push([
-            ScratchBlocks.ScratchMsgs.translate('SOUND_RECORD', 'record...'),
-            'SOUND_RECORD'
-        ]);
         return menu;
     };
 
@@ -134,13 +130,6 @@ export default function (vm) {
     ScratchBlocks.Blocks.sound_sounds_menu.init = function () {
         const json = jsonForMenuBlock('SOUND_MENU', soundsMenu, 'sounds', []);
         this.jsonInit(json);
-        this.getField('SOUND_MENU').setValidator(newValue => {
-            if (newValue === 'SOUND_RECORD') {
-                ScratchBlocks.recordSoundCallback();
-                return null;
-            }
-            return newValue;
-        });
     };
 
     ScratchBlocks.Blocks.looks_costume.init = function () {

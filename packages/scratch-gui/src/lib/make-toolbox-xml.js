@@ -796,7 +796,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         xmlOpen,
         // motionXML, gap,
         // looksXML, gap,
-        soundXML, gap,
+        // soundXML, gap,
         eventsXML, gap,
         controlXML, gap,
         // sensingXML, gap,

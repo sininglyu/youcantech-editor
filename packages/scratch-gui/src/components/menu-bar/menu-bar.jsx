@@ -30,7 +30,7 @@ import EditMenu from './edit-menu.jsx';
 import ModeMenu from './mode-menu.jsx';
 import AboutMenu from './about-menu.jsx';
 
-import {openTipsLibrary, openDebugModal} from '../../reducers/modals';
+import {openDebugModal} from '../../reducers/modals';
 import {setPlayer} from '../../reducers/mode';
 import {
     isTimeTravel220022BC,
@@ -59,7 +59,6 @@ import {PLATFORM} from '../../lib/platform';
 
 import styles from './menu-bar.css';
 
-import helpIcon from '../../lib/assets/icon--tutorials.svg';
 import mystuffIcon from './icon--mystuff.png';
 import profileIcon from './icon--profile.png';
 import remixIcon from './icon--remix.svg';
@@ -79,11 +78,6 @@ import {AccountMenuOptionsPropTypes} from '../../lib/account-menu-options';
 import AccountMenu from './account-menu.jsx';
 
 const ariaMessages = defineMessages({
-    tutorials: {
-        id: 'gui.menuBar.tutorialsLibrary',
-        defaultMessage: 'Tutorials',
-        description: 'accessibility text for the tutorials button'
-    },
     debug: {
         id: 'gui.menuBar.debug',
         defaultMessage: 'Debug',
@@ -465,21 +459,6 @@ class MenuBar extends React.Component {
                     <Divider className={classNames(styles.divider)} />
                     <div className={styles.fileGroup}>
                         <button
-                            aria-label={this.props.intl.formatMessage(ariaMessages.tutorials)}
-                            className={
-                                classNames(styles.menuBarItem, styles.noOffset, styles.hoverable, 'tutorials-button')
-                            }
-                            onClick={this.props.onOpenTipLibrary}
-                        >
-                            <img
-                                className={styles.helpIcon}
-                                src={helpIcon}
-                            />
-                            <span className={styles.tutorialsLabel}>
-                                <FormattedMessage {...ariaMessages.tutorials} />
-                            </span>
-                        </button>
-                        <button
                             aria-label={this.props.intl.formatMessage(ariaMessages.debug)}
                             className={classNames(styles.menuBarItem, styles.noOffset, styles.hoverable)}
                             onClick={this.props.onOpenDebugModal}
@@ -714,7 +693,6 @@ MenuBar.propTypes = {
     onClickSaveAsCopy: PropTypes.func,
     onLogOut: PropTypes.func,
     onOpenRegistration: PropTypes.func,
-    onOpenTipLibrary: PropTypes.func,
     onOpenDebugModal: PropTypes.func,
     onProjectTelemetryEvent: PropTypes.func,
     onRequestCloseLogin: PropTypes.func,
@@ -792,7 +770,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     autoUpdateProject: () => dispatch(autoUpdateProject()),
-    onOpenTipLibrary: () => dispatch(openTipsLibrary()),
     onOpenDebugModal: () => dispatch(openDebugModal()),
     onClickNew: needSave => dispatch(requestNewProject(needSave)),
     onClickLogin: ownProps.onClickLogin ?? (() => dispatch(openLoginMenu())),
